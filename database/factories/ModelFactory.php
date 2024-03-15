@@ -22,15 +22,13 @@ class ModelFactory extends Factory
     }
 
     public function holiday()
-{
-    return $this->state(function (array $attributes) {
-        return [
+    {
+        return $this->state(fn (array $attributes) => [
             "title" => $this->faker->sentence,
             "description" => $this->faker->paragraph,
             "date" => $this->faker->date,
             "location" => $this->faker->city,
             "participants" => $this->faker->randomDigit(),
-        ];
-    });
-}
+        ]);
+    }
 }
