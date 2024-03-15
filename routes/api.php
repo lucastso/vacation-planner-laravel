@@ -54,4 +54,13 @@ Route::middleware('auth:sanctum')->prefix('v1')->group( function() {
 
     // delete holiday
     Route::delete('/holiday/{id}', [\App\Http\Controllers\Api\HolidayController::class, 'delete']);
+
+    // add participant
+    Route::post('/holidays/{id}/add-participant/{user_id}', [\App\Http\Controllers\Api\HolidayController::class, 'addNewParticipant']);
+
+    // remove participant
+    Route::post('/holidays/{holiday_id}/remove-participant/{user_id}', [\App\Http\Controllers\Api\HolidayController::class, 'removeParticipant']);
+
+    // pdf controller
+    Route::get('/holiday/{id}/pdf', [\App\Http\Controllers\Api\PdfController::class, 'index']);
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Holiday;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class HolidayController extends Controller
@@ -53,7 +54,7 @@ class HolidayController extends Controller
             return response()->json(["holiday" => $holiday], 200);
         }
 
-        return response()->json(["error" => "There's no holiday with this ID."], 422);
+        return response()->json(["error" => "Holiday not found"], 422);
     }
 
     public function update(Request $request, $id)
@@ -88,5 +89,48 @@ class HolidayController extends Controller
         $holiday->delete();
 
         return response()->json(["message" => "Holiday deleted successfully"], 200);
+    }
+
+    public function addNewParticipant(Request $request, $holidayId, $userId)
+    {
+        $holiday = Holiday::findOrFail($holidayId);
+        $user = User::find($userId);
+    
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    
+        $participants = explode(',', $holiday->participants);
+        if (in_array($userId, $participants)) {
+            return response()->json(['error' => 'User is already a participant of this holiday'], 400);
+        }
+    
+        $participants[] = $userId;
+        $holiday->participants = implode(',', $participants);
+        $holiday->save();
+    
+        return response()->json(['message' => 'User added as a participant successfully'], 200);
+    }
+
+    public function removeParticipant(Request $request, $holidayId, $userId)
+    {
+        $holiday = Holiday::findOrFail($holidayId);
+        $user = User::find($userId);
+
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $participants = explode(',', $holiday->participants);
+        $participantKey = array_search($userId, $participants);
+        if ($participantKey === false) {
+            return response()->json(['error' => 'User is not a participant of this holiday'], 400);
+        }
+
+        unset($participants[$participantKey]);
+        $holiday->participants = implode(',', $participants);
+        $holiday->save();
+
+        return response()->json(['message' => 'User removed from participants successfully'], 200);
     }
 }
