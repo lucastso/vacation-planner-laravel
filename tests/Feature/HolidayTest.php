@@ -69,8 +69,8 @@ class HolidayTest extends TestCase
         $response = $this->deleteJson("/api/v1/holiday/" . $holiday->id);
 
         $response->assertStatus(200);
-        $this->assertDatabaseMissing('holidays', [
-            'id' => $holiday->id,
+        $this->assertDatabaseMissing("holidays", [
+            "id" => $holiday->id,
         ]);
     }
 }

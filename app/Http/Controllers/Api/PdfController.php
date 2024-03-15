@@ -15,13 +15,13 @@ class PdfController extends Controller
     {
         $holiday = Holiday::findOrFail($id);
 
-        $participantIds = explode(',', $holiday->participants);
-        $participants = User::whereIn('id', $participantIds)
-            ->pluck('name', 'id')
+        $participantIds = explode(",", $holiday->participants);
+        $participants = User::whereIn("id", $participantIds)
+            ->pluck("name", "id")
             ->toArray();
 
-        $pdf = PDF::loadView('pdf.holiday', compact('holiday', 'participants'));
+        $pdf = PDF::loadView("pdf.holiday", compact("holiday", "participants"));
 
-        return $pdf->download('holiday.pdf');
+        return $pdf->download("holiday.pdf");
     }
 }

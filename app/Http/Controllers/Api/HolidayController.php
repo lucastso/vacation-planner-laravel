@@ -47,7 +47,7 @@ class HolidayController extends Controller
     public function read(Request $request, $id)
     {
         $holiday = Holiday::query()
-            ->where('id', $id)
+            ->where("id", $id)
             ->first();
 
         if($holiday) {
@@ -97,19 +97,19 @@ class HolidayController extends Controller
         $user = User::find($userId);
     
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(["error" => "User not found"], 404);
         }
     
-        $participants = explode(',', $holiday->participants);
+        $participants = explode(",", $holiday->participants);
         if (in_array($userId, $participants)) {
-            return response()->json(['error' => 'User is already a participant of this holiday'], 400);
+            return response()->json(["error" => "User is already a participant of this holiday"], 400);
         }
     
         $participants[] = $userId;
-        $holiday->participants = implode(',', $participants);
+        $holiday->participants = implode(",", $participants);
         $holiday->save();
     
-        return response()->json(['message' => 'User added as a participant successfully'], 200);
+        return response()->json(["message" => "User added as a participant successfully"], 200);
     }
 
     public function removeParticipant(Request $request, $holidayId, $userId)
@@ -118,19 +118,19 @@ class HolidayController extends Controller
         $user = User::find($userId);
 
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(["error" => "User not found"], 404);
         }
 
-        $participants = explode(',', $holiday->participants);
+        $participants = explode(",", $holiday->participants);
         $participantKey = array_search($userId, $participants);
         if ($participantKey === false) {
-            return response()->json(['error' => 'User is not a participant of this holiday'], 400);
+            return response()->json(["error" => "User is not a participant of this holiday"], 400);
         }
 
         unset($participants[$participantKey]);
-        $holiday->participants = implode(',', $participants);
+        $holiday->participants = implode(",", $participants);
         $holiday->save();
 
-        return response()->json(['message' => 'User removed from participants successfully'], 200);
+        return response()->json(["message" => "User removed from participants successfully"], 200);
     }
 }
