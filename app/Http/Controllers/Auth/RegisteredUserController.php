@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
 
             return response()->json([
             'message' => 'Successfully created user!',
-            'accessToken'=> $token,
+            'access_token'=> $token,
             ],201);
         }
         else {
