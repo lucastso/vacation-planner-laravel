@@ -26,7 +26,6 @@ class HolidayController extends Controller
             "description" => "required|string",
             "date" => "required|date_format:Y-m-d",
             "location" => "required|string",
-            "participants" => "required|string",
         ]);
     
         if ($validator->fails()) {
@@ -38,7 +37,7 @@ class HolidayController extends Controller
         $holiday->description = $request->input("description");
         $holiday->date = $request->input("date");
         $holiday->location = $request->input("location");
-        $holiday->participants = $request->input("participants");
+        $holiday->participants = $request->user()->id;
         $holiday->save();
 
         return response()->json(["holiday" => $holiday], 201);
