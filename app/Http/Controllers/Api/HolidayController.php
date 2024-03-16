@@ -83,7 +83,7 @@ class HolidayController extends Controller
         $holiday = Holiday::find($id);
 
         if (!$holiday) {
-            return response()->json(["error" => "Holiday not found"], 404);
+            return response()->json(["error" => "Holiday not found"], 400);
         }
 
         $holiday->delete();
@@ -97,7 +97,7 @@ class HolidayController extends Controller
         $user = User::find($userId);
     
         if (!$user) {
-            return response()->json(["error" => "User not found"], 404);
+            return response()->json(["error" => "User not found"], 400);
         }
     
         $participants = explode(",", $holiday->participants);
@@ -118,7 +118,7 @@ class HolidayController extends Controller
         $user = User::find($userId);
 
         if (!$user) {
-            return response()->json(["error" => "User not found"], 404);
+            return response()->json(["error" => "User not found"], 400);
         }
 
         $participants = explode(",", $holiday->participants);
