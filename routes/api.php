@@ -17,6 +17,9 @@ use Illuminate\Validation\ValidationException;
 |
 */
 Route::post('/user/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'store']);
+Route::post('/user/login', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'login']);
+Route::post('/user/logout', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy']);
+
 Route::post('/user/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
