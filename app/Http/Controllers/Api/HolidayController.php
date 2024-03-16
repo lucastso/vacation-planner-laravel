@@ -65,7 +65,6 @@ class HolidayController extends Controller
             "description" => "required|string",
             "date" => "required|date_format:Y-m-d",
             "location" => "required|string",
-            "participants" => "required|string",
         ]);
 
         if ($validator->fails()) {
