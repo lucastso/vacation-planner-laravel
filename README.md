@@ -9,4 +9,7 @@ techs used:
 
 I'll be leaving here a link to provide a sample of this exactly app running, and a link with all API docs.
 
+video: https://drive.google.com/file/d/1R_xUO8LqIoD_xtkdne7iVzG_fVnnRss5/view?usp=drive_link
+api docs: https://vacation-planner-laravel-docs.vercel.app/
+
 // TODO
